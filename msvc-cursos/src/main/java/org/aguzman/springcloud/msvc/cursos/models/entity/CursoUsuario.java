@@ -26,18 +26,24 @@ public class CursoUsuario {
     }
 
     public void setUsuarioId(Long usuarioId) {
-        this.usuarioId = usuarioId;
+    this.usuarioId = usuarioId;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (!(obj instanceof CursoUsuario)) {
-            return false;
-        }
-        CursoUsuario o = (CursoUsuario) obj;
-        return this.usuarioId != null && this.usuarioId.equals(o.usuarioId);
+    if (this == obj) {
+        return true;
     }
+    if (!(obj instanceof CursoUsuario)) {
+        return false;
+    }
+    CursoUsuario o = (CursoUsuario) obj;
+    return this.usuarioId != null && this.usuarioId.equals(o.usuarioId);
+    }
+
+    @Override
+    public int hashCode() {
+    return java.util.Objects.hash(this.usuarioId);
+    }
+
 }

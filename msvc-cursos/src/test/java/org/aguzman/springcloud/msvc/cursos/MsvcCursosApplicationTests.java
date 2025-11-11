@@ -8,6 +8,7 @@ class MsvcCursosApplicationTests {
 
 	@Test
 	void contextLoads() {
+		    // Este test verifica que el contexto de Spring Boot carga correctamente.
 	}
 
 }

@@ -16,6 +16,8 @@ import java.util.*;
 @RestController
 public class CursoController {
 
+    private static final String MENSAJE_KEY = "mensaje";
+
     @Autowired
     private CursoService service;
 
@@ -26,7 +28,7 @@ public class CursoController {
 
     @GetMapping("/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id) {
-        Optional<Curso> o = service.porIdConUsuarios(id);//service.porId(id);
+        Optional<Curso> o = service.porIdConUsuarios(id);
         if (o.isPresent()) {
             return ResponseEntity.ok(o.get());
         }
@@ -73,7 +75,7 @@ public class CursoController {
             o = service.asignarUsuario(usuario, cursoId);
         } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Collections.singletonMap("mensaje", "No existe el usuario por " +
+                    .body(Collections.singletonMap("No existe el usuario por " +
                             "el id o error en la comunicacion: " + e.getMessage()));
         }
         if (o.isPresent()) {
@@ -89,7 +91,7 @@ public class CursoController {
             o = service.crearUsuario(usuario, cursoId);
         } catch (FeignException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(Collections.singletonMap("mensaje", "No se pudo crear el usuario " +
+                    .body(Collections.singletonMap("No se pudo crear el usuario " +
                             "o error en la comunicacion: " + e.getMessage()));
         }
         if (o.isPresent()) {
@@ -122,9 +124,9 @@ public class CursoController {
 
     private ResponseEntity<Map<String, String>> validar(BindingResult result) {
         Map<String, String> errores = new HashMap<>();
-        result.getFieldErrors().forEach(err -> {
-            errores.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage());
-        });
-        return ResponseEntity.badRequest().body(errores);
-    }
+        result.getFieldErrors().forEach(
+            err -> errores.put(err.getField(), "El campo " + err.getField() + " " + err.getDefaultMessage())
+    );
+    return ResponseEntity.badRequest().body(errores);
+}
 }
